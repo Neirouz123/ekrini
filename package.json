@@ -10,7 +10,16 @@
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm start",
+    "start:auth": "cd backend/auth-user-service && nodemon src/app.js",
+    "start:agency": "cd backend/agency-fleet-service && nodemon src/app.js",
+    "start:search": "cd backend/search-availability-service && nodemon src/app.js",
+    "start:reservation": "cd backend/reservation-service && nodemon src/app.js",
+    "start:payment": "cd backend/payment-billing-service && nodemon src/app.js",
+    "start:review": "cd backend/review-support-service && nodemon src/app.js",
+    "dev:backend-local": "concurrently \"npm run start:auth\" \"npm run start:agency\" \"npm run start:search\" \"npm run start:reservation\" \"npm run start:payment\" \"npm run start:review\"",
     "docker:dev": "cd docker && docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build",
+    "docker:frontend:install": "cd docker && docker-compose -f docker-compose.yml -f docker-compose.dev.yml run --rm frontend sh -c \"npm install --legacy-peer-deps\"",
+    "docker:dev-fast": "cd docker && docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d",
     "docker:build": "cd docker && docker-compose build",
     "docker:up": "cd docker && docker-compose up -d",
     "docker:down": "cd docker && docker-compose down",
@@ -18,11 +27,15 @@
     "docker:clean": "cd docker && docker-compose down -v --rmi all"
   },
   "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^5.1.0",
     "mongodb": "^6.2.0",
-    "dotenv": "^16.3.1"
+    "mongoose": "^9.0.0",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "nodemon": "^2.0.22"
   },
   "workspaces": [
     "backend/*",
